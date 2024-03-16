@@ -2,7 +2,7 @@
 import { MovieDetail } from "@/app/util";
 import { Text, Title } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const ListMovie = ({
   title,

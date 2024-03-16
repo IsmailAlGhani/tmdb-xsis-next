@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Text, Title } from "@mantine/core";
 import { MovieDetail } from "@/app/util";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const ListSearchMovie = ({
   title,

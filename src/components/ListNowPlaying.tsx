@@ -2,7 +2,7 @@
 import { MovieDetail } from "@/app/util";
 import { Carousel } from "@mantine/carousel";
 import { Text, Title } from "@mantine/core";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const ListNowPlaying = ({
   listData,
