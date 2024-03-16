@@ -22,7 +22,7 @@ const ListNowPlaying = ({
       height={400}
       classNames={{
         indicators: "!-mb-6",
-        indicator: "!h-4 !w-4 !rounded-full",
+        indicator: "!h-4 !w-4 !rounded-full !bg-white",
       }}
     >
       {listData.length > 0
@@ -35,15 +35,19 @@ const ListNowPlaying = ({
                 tabIndex={0}
                 role="button"
               >
-                <div className="!flex !justify-center !w-56 relative">
-                  <Image
-                    src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-                    alt={`${item.title}-poster-playing`}
-                    fill
-                    sizes="100vw"
-                    style={{
-                      objectFit: "cover"
-                    }} />
+                <div className="!flex !justify-center">
+                  <div className="!w-56 relative">
+                    <Image
+                      src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                      alt={`${item.title}-poster-playing`}
+                      fill
+                      className="rounded-lg"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      style={{
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-4 px-4 w-full h-full">

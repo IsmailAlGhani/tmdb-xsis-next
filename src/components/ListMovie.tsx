@@ -60,12 +60,13 @@ const ListMovie = ({
             tabIndex={0}
             role="button"
           >
-            <div className="!w-fit !h-56 relative">
+            <div className="!w-36 !h-56 rounded-lg relative">
               <Image
                 src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                 alt={`${item.title}-poster-${title}`}
                 fill
-                sizes="100vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="!rounded-lg"
                 style={{
                   objectFit: "cover",
                 }}

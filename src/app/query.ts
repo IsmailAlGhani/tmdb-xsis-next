@@ -41,10 +41,18 @@ const fetcSearchMovie = async ({
 };
 
 const HEADER_URL = "https://api.themoviedb.org/3/movie";
+const HEADER_URL_SEARCH = "https://api.themoviedb.org/3/search/movie";
 
 export const fetcher = (url: string) =>
   axios
     .get(`${HEADER_URL + url}`, {
+      headers: HEADERS,
+    })
+    .then((res) => res.data);
+
+export const fetcherSearch = (url: string) =>
+  axios
+    .get(`${HEADER_URL_SEARCH + url}`, {
       headers: HEADERS,
     })
     .then((res) => res.data);
@@ -61,11 +69,15 @@ export const getKey = ({
   search?: string;
 }) => {
   if (
-    !previousPageData ||
+    previousPageData &&
     previousPageData.page === previousPageData.total_pages
   )
     return null; // reached the end
-  return search
-    ? `?query=${search}&include_adult=false&language=en-US&page=${pageIndex}`
-    : `/${type}?language=en-US&page=${pageIndex}`; // SWR key
+
+  if (type === "search" && !search) return null;
+  return type === "search"
+    ? `?query=${search}&include_adult=false&language=en-US&page=${
+        pageIndex + 1
+      }`
+    : `/${type}?language=en-US&page=${pageIndex + 1}`; // SWR key
 };

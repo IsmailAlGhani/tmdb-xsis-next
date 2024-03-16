@@ -16,7 +16,7 @@ import { MovieDetail, MovieList, debounce, filterDuplicate } from "./util";
 import { modals } from "@mantine/modals";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
-import { fetcher, getKey } from "./query";
+import { fetcher, fetcherSearch, getKey } from "./query";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ListSearchMovie from "@/components/ListSearchMovie";
 import ListNowPlaying from "@/components/ListNowPlaying";
@@ -84,7 +84,8 @@ export default function Home() {
   } = useSWRInfinite<MovieList>(
     (index, previousPageData) =>
       getKey({ pageIndex: index, previousPageData, type: "popular" }),
-    fetcher
+    fetcher,
+    { suspense: true }
   );
 
   const dataPopularMovie = useMemo(
@@ -107,8 +108,9 @@ export default function Home() {
     isLoading: isFetchingTopMovie,
   } = useSWRInfinite<MovieList>(
     (index, previousPageData) =>
-      getKey({ pageIndex: index, previousPageData, type: "top" }),
-    fetcher
+      getKey({ pageIndex: index, previousPageData, type: "top_rated" }),
+    fetcher,
+    { suspense: true }
   );
 
   const dataTopMovie = useMemo(
@@ -131,8 +133,14 @@ export default function Home() {
     isLoading: isFetchingSearchMovie,
   } = useSWRInfinite<MovieList>(
     (index, previousPageData) =>
-      getKey({ pageIndex: index, previousPageData, search: search }),
-    fetcher
+      getKey({
+        pageIndex: index,
+        previousPageData,
+        search: search,
+        type: "search",
+      }),
+    fetcherSearch,
+    { suspense: true }
   );
 
   const dataSearchMovie = useMemo(
@@ -170,11 +178,17 @@ export default function Home() {
   }, 500);
 
   return (
-    <AppShell header={{ height: 60 }} padding="md">
+    <AppShell header={{ height: 60 }} padding="md" className="!bg-[#495057]">
       <AppShell.Header className="!sticky !top-0 !p-4 !z-10 !bg-[#212529]">
         <Group h="100%">
           <Group justify="space-between" style={{ flex: 1 }}>
-            <Burger opened={opened} onClick={close} hiddenFrom="sm" size="sm" />
+            <Burger
+              opened={opened}
+              onClick={open}
+              hiddenFrom="sm"
+              size="sm"
+              className="!bg-white !rounded"
+            />
             <Group gap={"sm"} visibleFrom="sm">
               <UnstyledButton>
                 <Title order={3} className="!text-white">
@@ -223,7 +237,7 @@ export default function Home() {
             </Text>
           </Flex>
         </Drawer>
-        <Flex gap="md" direction="column" wrap="wrap" py={"sm"} w={"100%"}>
+        <Flex gap="md" direction="column" py={"sm"} w={"100%"}>
           {search && dataSearchMovie.length > 0 ? (
             <ListSearchMovie
               dataList={dataSearchMovie}
