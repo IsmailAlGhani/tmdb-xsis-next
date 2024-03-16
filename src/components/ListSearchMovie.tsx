@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Text, Title } from "@mantine/core";
 import { MovieDetail } from "@/app/util";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 const ListSearchMovie = ({
   title,
@@ -63,9 +63,11 @@ const ListSearchMovie = ({
               <Image
                 src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                 alt={`${item.title}-poster-${title}`}
-                layout="fill" // required
-                objectFit="cover" // change to suit your needs
-              />
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover"
+                }} />
             </div>
             <div className="absolute rounded bg-[#ced4da] opacity-40 px-2 hover:opacity-100 right-3 bottom-3 left-3">
               <Text fz="sm" lh="sm" c={"dark"} className="!text-wrap">

@@ -2,7 +2,7 @@
 import { MovieDetail } from "@/app/util";
 import { Carousel } from "@mantine/carousel";
 import { Text, Title } from "@mantine/core";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 const ListNowPlaying = ({
   listData,
@@ -39,9 +39,11 @@ const ListNowPlaying = ({
                   <Image
                     src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                     alt={`${item.title}-poster-playing`}
-                    layout="fill" // required
-                    objectFit="cover" // change to suit your needs
-                  />
+                    fill
+                    sizes="100vw"
+                    style={{
+                      objectFit: "cover"
+                    }} />
                 </div>
 
                 <div className="flex flex-col gap-4 px-4 w-full h-full">
