@@ -84,8 +84,7 @@ export default function Home() {
   } = useSWRInfinite<MovieList>(
     (index, previousPageData) =>
       getKey({ pageIndex: index, previousPageData, type: "popular" }),
-    fetcher,
-    { suspense: true }
+    fetcher
   );
 
   const dataPopularMovie = useMemo(
@@ -109,8 +108,7 @@ export default function Home() {
   } = useSWRInfinite<MovieList>(
     (index, previousPageData) =>
       getKey({ pageIndex: index, previousPageData, type: "top_rated" }),
-    fetcher,
-    { suspense: true }
+    fetcher
   );
 
   const dataTopMovie = useMemo(
@@ -139,8 +137,7 @@ export default function Home() {
         search: search,
         type: "search",
       }),
-    fetcherSearch,
-    { suspense: true }
+    fetcherSearch
   );
 
   const dataSearchMovie = useMemo(
